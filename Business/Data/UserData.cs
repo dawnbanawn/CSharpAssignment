@@ -1,8 +1,10 @@
 ﻿using Business.Models;
+using Business.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Business.Data
@@ -10,16 +12,44 @@ namespace Business.Data
     internal class UserData
     {
         List<UserModel> UserList = new() { };
+        List<UserModelSafe> UserListNamePassword = new();
+
+
 
         public string AddToList(UserModel user)
         {
-            UserList.Add(user);
-            return "User added";
+            try
+            {
+                UserList.Add(user);
+                return "User added";
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ading a user didnt work.");
+            }
         }
 
-        public List<UserModel> GetList()
+        public List<UserModelSafe> GetList()
         {
-            return UserList;
+            try
+            {
+                List<UserModelSafe> UserListNamePassword = new();
+                foreach (UserModel item in UserList)
+                {
+                    UserModelSafe model = new();
+                    model.Name = item.Name;
+                    model.Email = item.Email;
+                    UserListNamePassword.Add(model);
+                }
+                return UserListNamePassword;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Getting the list didnt work.");
+            }
+
+
+            
         }
     }
 }

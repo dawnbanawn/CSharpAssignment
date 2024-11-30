@@ -10,20 +10,35 @@ namespace Business.Services
 {
     public class UserCRUD
     {
-        private UserModel model = new();
+        
         UserData userData = new UserData();
         public UserModel AddUser(string name, string email, string password)
         {
-            model.Name = name;
-            model.Email = email;
-            model.Password = password;            
-            userData.AddToList(model);
-            return model;
+            try
+            {
+                UserModel model = new();
+                model.Id = Guid.NewGuid();
+                model.Name = name;
+                model.Email = email;
+                model.Password = password;
+                userData.AddToList(model);
+                return model;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Ading a user didnt work.");
+            }
         }
-        public List<UserModel> GetList()
+        public List<UserModelSafe> GetList()
         {
-            userData.GetList();
-            return userData.GetList();
+            try
+            {
+                return userData.GetList();
+            }
+            catch (Exception)
+            {
+                throw new Exception("Getting user list didnt work.");
+            }
         }
 
 

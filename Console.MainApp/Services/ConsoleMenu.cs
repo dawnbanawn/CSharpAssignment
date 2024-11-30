@@ -1,7 +1,9 @@
-﻿using Business.Services;
+﻿using Business.Models;
+using Business.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,7 @@ namespace MainApp.Services
         public void Menu()
         {
             string choice = "";
+
             UserCRUD userCRUD = new UserCRUD();
             Console.WriteLine("Welcome to the menu!:");
             Console.WriteLine("Press 'a' to add a user, 's' to show all users, or 'x' to exit.");
@@ -40,7 +43,15 @@ namespace MainApp.Services
                     case "s":
                         Console.WriteLine();
                         Console.WriteLine("Showing all users ...");
-                        userCRUD.GetList();
+                        List<UserModelSafe> UserList = userCRUD.GetList();
+                        int count = 0;
+                        foreach (UserModelSafe UserModel in UserList)
+                        {
+                            count++;
+                            Console.WriteLine("User number " + count);
+                            Console.WriteLine("Name: "+ UserModel.Name);
+                            Console.WriteLine("Email: " + UserModel.Email); 
+                        }
                         break;
                     case "x":
                         Console.WriteLine();

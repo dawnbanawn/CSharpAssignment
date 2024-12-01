@@ -11,8 +11,7 @@ namespace Business.Data
 {
     internal class UserData
     {
-        List<UserModel> UserList = new() { };
-        List<UserModelSafe> UserListNamePassword = new();
+        public static List<UserModel> UserList = new();
 
 
 
@@ -31,6 +30,8 @@ namespace Business.Data
 
         public List<UserModelSafe> GetSafeList()
         {
+            Console.WriteLine(UserList.Count + " why this works");
+
             try
             {
                 List<UserModelSafe> UserListNamePassword = new();
@@ -51,12 +52,15 @@ namespace Business.Data
 
             
         }
-        public IEnumerable<List<UserModel>> GetList()
+
+        public List<UserModel> GetList()
         {
-            List<UserModel> listCopy = new(UserList);
+
+            Console.WriteLine(UserList.Count +  " wtff");
+
             try
             {
-                yield return listCopy;
+                return UserList;
             }
             catch (Exception)
             {

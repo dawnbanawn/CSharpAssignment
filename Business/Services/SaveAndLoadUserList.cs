@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class SaveAndLoadUserList
+    public class SaveAndLoadUserList 
     {
         readonly string _directoryPath = @"c:\Data";
         readonly string _fileName = "list.json";
@@ -21,6 +21,7 @@ namespace Business.Services
 
         public string SaveJson() {
 
+
             string filePath = Path.Combine(_directoryPath, _fileName);
 
             if (!Directory.Exists(_directoryPath))
@@ -29,11 +30,9 @@ namespace Business.Services
             }
 
 
-            List<UserModel> list = userData.GetList();
-
-            var json = JsonSerializer.Serialize(list, _jsonSerializerOptions);
+            var json = JsonSerializer.Serialize(userData.GetList(), _jsonSerializerOptions);
             File.WriteAllText(filePath, json);
-            return "list saved!";
+            return "fff";
         }
 
         public string LoadJson()

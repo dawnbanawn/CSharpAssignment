@@ -25,7 +25,7 @@ namespace MainApp.Services
             }
             Console.WriteLine("Welcome to the menu!:");
             Console.WriteLine("Press 'a' to add a user, 's' to show all users, or 'x' to exit.");
-            while (!choice.Equals("x", StringComparison.CurrentCultureIgnoreCase))
+            while (true)
             {
                 // Create a string variable and get user input from the keyboard and store it in the variable
                 choice = Console.ReadKey().KeyChar.ToString();
@@ -60,15 +60,12 @@ namespace MainApp.Services
                         }
                         break;
                     case "x":
-                        Console.WriteLine();
+   
                         Console.WriteLine("Saving Json and Exiting the program ...");
 
-                        var saveList =  _saveAndLoadUserList.SaveJson();
-                        if (saveList != null)
-                        {
-                            Console.WriteLine("List saved ...");
-                        }
-                        Environment.Exit(0);
+                        var fff = _saveAndLoadUserList.SaveJson();
+        
+                        //Environment.Exit(0);
                         break;
                     default:
                         choice = "";

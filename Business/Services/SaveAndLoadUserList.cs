@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Data;
+using Business.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,23 +10,51 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    internal class SaveAndLoadUserList
+    public class SaveAndLoadUserList
     {
-        readonly string filePath = "/";
+        readonly string _directoryPath = @"c:\Data";
+        readonly string _fileName = "list.json";
+
+
         private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
-        public string SaveJson(List<UserModel> list) {
+        UserData userData = new UserData();
+
+        public string SaveJson() {
+
+            string filePath = Path.Combine(_directoryPath, _fileName);
+
+            if (!Directory.Exists(_directoryPath))
+            {
+                Directory.CreateDirectory(_directoryPath);
+            }
+
+
+            List<UserModel> list = userData.GetList();
 
             var json = JsonSerializer.Serialize(list, _jsonSerializerOptions);
             File.WriteAllText(filePath, json);
             return "list saved!";
         }
 
-        public List<UserModel> LoadJson()
+        public string LoadJson()
         {
+            string filePath = Path.Combine(_directoryPath, _fileName);
 
             var json = File.ReadAllText(filePath);
             var list = JsonSerializer.Deserialize<List<UserModel>>(json, _jsonSerializerOptions);
-            return list ?? [];
+            if (list != null)
+            {
+                Console.WriteLine("List loadeeed:");
+
+                return userData.LoadList(list);
+
+            }
+            else
+            {
+                Console.WriteLine("list nooot loaded!:");
+
+                return "It didnt go";
+            }
         }
     }
 

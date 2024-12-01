@@ -17,6 +17,12 @@ namespace MainApp.Services
             string choice = "";
 
             UserCRUD userCRUD = new UserCRUD();
+            SaveAndLoadUserList _saveAndLoadUserList = new SaveAndLoadUserList();
+            var loadList = _saveAndLoadUserList.LoadJson();
+            if (loadList != null)
+            {
+                Console.WriteLine("List loaded ...");
+            }
             Console.WriteLine("Welcome to the menu!:");
             Console.WriteLine("Press 'a' to add a user, 's' to show all users, or 'x' to exit.");
             while (!choice.Equals("x", StringComparison.CurrentCultureIgnoreCase))
@@ -43,7 +49,7 @@ namespace MainApp.Services
                     case "s":
                         Console.WriteLine();
                         Console.WriteLine("Showing all users ...");
-                        List<UserModelSafe> UserList = userCRUD.GetList();
+                        List<UserModelSafe> UserList = userCRUD.GetSafeList();
                         int count = 0;
                         foreach (UserModelSafe UserModel in UserList)
                         {
@@ -55,7 +61,13 @@ namespace MainApp.Services
                         break;
                     case "x":
                         Console.WriteLine();
-                        Console.WriteLine("Exiting the program ...");
+                        Console.WriteLine("Saving Json and Exiting the program ...");
+
+                        var saveList =  _saveAndLoadUserList.SaveJson();
+                        if (saveList != null)
+                        {
+                            Console.WriteLine("List saved ...");
+                        }
                         Environment.Exit(0);
                         break;
                     default:

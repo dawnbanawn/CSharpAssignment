@@ -29,11 +29,11 @@ namespace Business.Services
                 throw new Exception("Ading a user didnt work.");
             }
         }
-        public List<UserModelSafe> GetList()
+        public List<UserModelSafe> GetSafeList()
         {
             try
             {
-                return userData.GetList();
+                return userData.GetSafeList();
             }
             catch (Exception)
             {

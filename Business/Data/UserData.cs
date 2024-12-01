@@ -29,7 +29,7 @@ namespace Business.Data
             }
         }
 
-        public List<UserModelSafe> GetList()
+        public List<UserModelSafe> GetSafeList()
         {
             try
             {
@@ -50,6 +50,26 @@ namespace Business.Data
 
 
             
+        }
+        public IEnumerable<List<UserModel>> GetList()
+        {
+            List<UserModel> listCopy = new(UserList);
+            try
+            {
+                yield return listCopy;
+            }
+            catch (Exception)
+            {
+                throw new Exception("Returning the list didnt work.");
+            }
+
+
+
+        }
+        public string LoadList(List<UserModel> list)
+        {
+            UserList = list;
+            return "Success";
         }
     }
 }

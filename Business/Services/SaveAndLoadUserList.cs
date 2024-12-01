@@ -14,20 +14,22 @@ namespace Business.Services
     {
         readonly string _directoryPath = @"c:\Data";
         readonly string _fileName = "list.json";
-
-
-        private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
-        UserData userData = new UserData();
-
-        public string SaveJson() {
-
-
-            string filePath = Path.Combine(_directoryPath, _fileName);
-
+        string filePath;
+        public SaveAndLoadUserList()
+        {
+            filePath = Path.Combine(_directoryPath, _fileName);
             if (!Directory.Exists(_directoryPath))
             {
                 Directory.CreateDirectory(_directoryPath);
             }
+        }
+
+        private readonly JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions { WriteIndented = true };
+        UserData userData = new UserData();
+
+        public string SaveJson() {          
+
+ 
 
 
             var json = JsonSerializer.Serialize(userData.GetList(), _jsonSerializerOptions);
@@ -37,23 +39,32 @@ namespace Business.Services
 
         public string LoadJson()
         {
-            string filePath = Path.Combine(_directoryPath, _fileName);
+            try {
+                string filePath = Path.Combine(_directoryPath, _fileName);
 
-            var json = File.ReadAllText(filePath);
-            var list = JsonSerializer.Deserialize<List<UserModel>>(json, _jsonSerializerOptions);
-            if (list != null)
-            {
-                Console.WriteLine("List loadeeed:");
+                var json = File.ReadAllText(filePath);
 
-                return userData.LoadList(list);
+                if (json != null)
+                {
+                    Console.WriteLine("List loadeeed:");
+                    var list = JsonSerializer.Deserialize<List<UserModel>>(json, _jsonSerializerOptions);
+                    return userData.LoadList(list);
 
+                }
+                else
+                {
+                    Console.WriteLine("list nooot loaded!:");
+
+                    return "It didnt go";
+                }
             }
-            else
+            catch (Exception)
             {
-                Console.WriteLine("list nooot loaded!:");
-
+                Console.WriteLine("No list found");
                 return "It didnt go";
+
             }
+
         }
     }
 

@@ -11,24 +11,30 @@ namespace Business.Services
     public class UserCRUD
     {
         
-        UserData userData = new UserData();
+        UserData userData = new();
+        // A method to create a user, with parameters.
         public UserModel AddUser(string name, string email, string password)
         {
             try
             {
-                UserModel model = new();
-                model.Id = Guid.NewGuid();
-                model.Name = name;
-                model.Email = email;
-                model.Password = password;
+                // Instantiate model with the parameters, and also creates a guid id.
+                UserModel model = new()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = name,
+                    Email = email,
+                    Password = password
+                };
+                // Calls method to send the model to the class handling the "database" (the list).
                 userData.AddToList(model);
                 return model;
             }
             catch (Exception)
             {
-                throw new Exception("Ading a user didnt work.");
+                throw new Exception("Adding a user to the list didnt work.");
             }
         }
+        // Method for getting the list with "safer" model (no id/password), from the data class.
         public List<UserModelSafe> GetSafeList()
         {
             try

@@ -14,21 +14,26 @@ namespace MainApp.Services
     {
         public void Menu()
         {
-            string choice = "";
+            
+            // Instantiate service classes
+            UserCRUD userCRUD = new();
+            SaveAndLoadUserList _saveAndLoadUserList = new();
 
-            UserCRUD userCRUD = new UserCRUD();
-            SaveAndLoadUserList _saveAndLoadUserList = new SaveAndLoadUserList();
+            // Calls function to load json, and save the return.
             var loadList = _saveAndLoadUserList.LoadJson();
+            // Checks if the function call was successfull.
             if (loadList != null)
             {
                 Console.WriteLine("List loaded ...");
             }
             Console.WriteLine("Welcome to the menu!:");
             Console.WriteLine("Press 'a' to add a user, 's' to show all users, or 'x' to exit.");
+            // Loop that only ends when program exits.
             while (true)
             {
-                // Create a string variable and get user input from the keyboard and store it in the variable
-                choice = Console.ReadKey().KeyChar.ToString();
+                // Stores keyboard input in a variable.
+                string choice = Console.ReadKey().KeyChar.ToString();
+                // Checks and runs code depending on the variable.
                 switch (choice)
                 {
                     case "a":
@@ -40,8 +45,9 @@ namespace MainApp.Services
                         string email = Console.ReadLine().ToString();
                         Console.WriteLine("password: ");
                         string password = Console.ReadLine().ToString();
-                        var bloo = userCRUD.AddUser(name, email, password);
-                        if (bloo != null)
+                        // Calls function to add user, with user info as arguments, and saves/checks the return.
+                        var answer = userCRUD.AddUser(name, email, password);
+                        if (answer != null)
                         {
                             Console.WriteLine("User added!");
                         }
@@ -49,8 +55,10 @@ namespace MainApp.Services
                     case "s":
                         Console.WriteLine();
                         Console.WriteLine("Showing all users ...");
+                        // Calls a function that returns a list with models that don´t have ID/password.
                         List<UserModelSafe> UserList = userCRUD.GetSafeList();
                         int count = 0;
+                        // For loop that prints all items to the console.
                         foreach (UserModelSafe UserModel in UserList)
                         {
                             count++;
@@ -60,15 +68,15 @@ namespace MainApp.Services
                         }
                         break;
                     case "x":
-   
+                        Console.WriteLine();
                         Console.WriteLine("Saving Json and Exiting the program ...");
-
-                        var fff = _saveAndLoadUserList.SaveJson();
-        
-                        //Environment.Exit(0);
+                        // Calls method that saves the user list to a json.
+                        var saveReturn = _saveAndLoadUserList.SaveJson();
+                        Console.WriteLine(saveReturn);
+                        // Exists the program.
+                        Environment.Exit(0);
                         break;
                     default:
-                        choice = "";
                         break;
                 }
             }

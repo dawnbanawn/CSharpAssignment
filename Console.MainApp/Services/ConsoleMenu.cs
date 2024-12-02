@@ -12,7 +12,7 @@ namespace MainApp.Services
 {
     internal class ConsoleMenu
     {
-        public void Menu()
+        public static void Menu()
         {
             
             // Instantiate service classes

@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace Business.Models
 {
-    public class UserModel
+    // Model that inherits from another model.
+    public class UserModel : UserModelSafe
     {
         public Guid Id { get; set; }
-        public string Name { get; set; } = "";
-        public string Email { get; set; } = "";
+        //public string Name { get; set; } = "";
+        //public string Email { get; set; } = "";
         public string Password { get; set; } = "";
 
     }

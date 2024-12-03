@@ -1,4 +1,5 @@
 ﻿using Business.Data;
+using Business.Interfaces;
 using Business.Models;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class UserCRUD
+    public class UserCRUD : IUserCRUD
     {
-        
-        UserData userData = new();
+
+        IUserData userData = new UserData();
         // A method to create a user, with parameters.
         public UserModel AddUser(string name, string email, string password)
         {

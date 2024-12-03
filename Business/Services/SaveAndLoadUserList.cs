@@ -1,4 +1,5 @@
 ﻿using Business.Data;
+using Business.Interfaces;
 using Business.Models;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Business.Services
 {
-    public class SaveAndLoadUserList 
+    public class SaveAndLoadUserList : ISaveAndLoadUserList
     {
         // Variables for json storing directory.
         readonly string _directoryPath = @"c:\Data";
@@ -18,7 +19,7 @@ namespace Business.Services
         string filePath;
         // Instantiation with options to be able to turn list into json, and vice versa.
         private readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
-        UserData userData = new();
+        IUserData userData = new UserData();
 
         // Constructor that ccreates the directory path if not found, and it combines the whole file path.
         public SaveAndLoadUserList()
@@ -31,7 +32,8 @@ namespace Business.Services
         }
 
         // Method to save list to json
-        public string SaveJson() {
+        public string SaveJson()
+        {
             try
             {
                 // Gets the list from the class, and stores it as a json in the variable.
@@ -49,15 +51,16 @@ namespace Business.Services
         // Method to load json file.
         public string LoadJson()
         {
-            try {
+            try
+            {
                 // A variable stores the json from the disk.
                 var json = File.ReadAllText(filePath);
 
-                    Console.WriteLine("List loaded.");
-                    // A list is created and stored in a variable.
-                    var list = JsonSerializer.Deserialize<List<UserModel>>(json, _jsonSerializerOptions);
-                    // The list is sent to a loading method.
-                    return userData.LoadList(list);
+                Console.WriteLine("List loaded.");
+                // A list is created and stored in a variable.
+                var list = JsonSerializer.Deserialize<List<UserModel>>(json, _jsonSerializerOptions);
+                // The list is sent to a loading method.
+                return userData.LoadList(list);
 
             }
             catch (Exception)

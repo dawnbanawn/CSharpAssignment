@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Interfaces;
+using Business.Models;
 using Business.Services;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,8 @@ namespace MainApp.Services
         {
             
             // Instantiate service classes
-            UserCRUD userCRUD = new();
-            SaveAndLoadUserList _saveAndLoadUserList = new();
+            IUserCRUD userCRUD = new UserCRUD();
+            ISaveAndLoadUserList _saveAndLoadUserList = new SaveAndLoadUserList();
 
             // Calls function to load json, and save the return.
             var loadList = _saveAndLoadUserList.LoadJson();
@@ -33,8 +34,8 @@ namespace MainApp.Services
             {
                 // Stores keyboard input in a variable.
                 string choice = Console.ReadKey().KeyChar.ToString();
-                // Checks and runs code depending on the variable.
-                switch (choice)
+                // Checks and runs code depending on the variable, converted to lower case.
+                switch (choice.ToLower())
                 {
                     case "a":
                         Console.WriteLine();

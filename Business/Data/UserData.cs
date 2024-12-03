@@ -1,4 +1,5 @@
-﻿using Business.Models;
+﻿using Business.Interfaces;
+using Business.Models;
 using Business.Services;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Business.Data
 {
-    internal class UserData
+    internal class UserData : IUserData
     {
         // Instantiation of a static list with UserModel model, to be used for storing the users.
         public static List<UserModel> UserList = new();

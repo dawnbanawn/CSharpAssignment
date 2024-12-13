@@ -27,7 +27,7 @@ namespace Business.Data
             }
             catch (Exception)
             {
-                throw new Exception("Ading a user didnt work.");
+                throw new Exception("Adding a user didnt work.");
             }
         }
         // Method that returns a safe list version of the users.
